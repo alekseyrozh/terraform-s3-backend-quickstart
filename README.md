@@ -56,7 +56,16 @@ yes
 
 In `./backend/main.tf` change `prevent_destroy = true` to `prevent_destroy = false` in s3 bucket resource
 
-4. Delete all content of all versions in the bucket by running this aws cli command. **Replace `<YOUR BUCKET NAME>` in this command in 2 places**.
+4. Delete all content of all versions in the bucket.
+
+You have 2 options:
+
+a) via AWS console, go to s3, select the bucket and click `EMPTY BUCKET`
+
+b) via AWS CLI:
+
+Run the command after
+**replacing `<YOUR BUCKET NAME>` with your bucket name in 2 places**.
 
 ```
 aws s3api delete-objects --bucket <YOUR BUCKET NAME> \
