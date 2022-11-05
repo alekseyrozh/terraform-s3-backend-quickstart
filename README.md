@@ -74,6 +74,8 @@ yes
 terraform apply
 ```
 
+8. Now you can add your terraform code at the bottom of `main.tf`
+
 # How to destroy the infrastructure (s3 + dynamodb) without messing things up
 
 1. Comment out the backend configuration in `./main.tf`
