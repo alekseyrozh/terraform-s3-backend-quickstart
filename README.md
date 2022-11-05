@@ -1,19 +1,33 @@
+# Preconditions:
+
+- Have AWS CLI installed
+- Have Terraform Cli installed
+- Have AWS account credentials exported/configured with sufficient rights to create and destroy stuff
+
 # How to start using terraform with s3 backend
 
-1. Change aws region and bucket name to what you need.
+## Steps:
+
+1. Make sure you're making changes to the right AWS account. Execute this command to see who you are authenticated as
+
+```
+aws sts get-caller-identity
+```
+
+2. Change aws region and bucket name to what you need.
 
 - Open `./main.tf`
 - Change `aws-region` in `locals` to the region you want
 - Change `terraform_state_bucket_name` to the bucket name that makes sense for your project. **Bucket name must be unique across all of AWS**
 - Change `region` and `bucket` in `backend` configuration a few lines above to match the values you just set in `locals`. Keep backend configuration commented out for now
 
-2. Terraform init for the first time
+3. Terraform init for the first time
 
 ```
 terraform init
 ```
 
-3. Terraform apply to create s3 bucket, dynamodb table and a secret in KMS for encypting data in s3
+4. Terraform apply to create s3 bucket, dynamodb table and a secret in KMS for encypting data in s3
 
 ```
 terraform apply
@@ -22,7 +36,7 @@ terraform apply
 yes
 ```
 
-4.  Uncomment the s3 backend provider code, cause now we created all infrastructure to be able to switch to new backend
+5.  Uncomment the s3 backend provider code in `./main.tf`, cause now we created all infrastructure to be able to switch to new backend
 
 ```
 terraform {
@@ -45,7 +59,7 @@ terraform {
 }
 ```
 
-5.  Terraform init once again cause we're using new backend
+6.  Terraform init once again cause we're using new backend
 
 ```
 terraform init
@@ -54,7 +68,7 @@ terraform init
 yes
 ```
 
-6. Just as a test, do terraform apply and see 0 changes
+7. Just as a test, do terraform apply and see 0 changes
 
 ```
 terraform apply
