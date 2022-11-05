@@ -31,7 +31,7 @@ provider "aws" {
   region = local.aws_region
 }
 
-module "terraform-backend" {
+module "terraform_backend" {
   source = "./backend"
 
   aws_region             = local.aws_region
