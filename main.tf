@@ -8,7 +8,7 @@ terraform {
 
   # backend "s3" {
   #   region         = "eu-central-1"
-  #   bucket         = "terraform-state-for-MY-ORG"
+  #   bucket         = "terraform-state-for-my-org"
   #   dynamodb_table = "terraform-state-lock"
   #   kms_key_id     = "alias/terraform-bucket-key"
 
@@ -22,7 +22,7 @@ terraform {
 # This can be avoided by using Terragrunt, but that's an adventure for another day
 locals {
   aws_region                             = "eu-central-1"
-  terraform_state_bucket_name            = "terraform-state-for-MY-ORG" # this bucket name needs to be unique across AWS
+  terraform_state_bucket_name            = "terraform-state-for-my-org" # this bucket name needs to be unique across AWS
   terraform_state_dynamo_lock_table_name = "terraform-state-lock"
   terraform_state_kms_key_alias          = "alias/terraform-bucket-key"
 }
