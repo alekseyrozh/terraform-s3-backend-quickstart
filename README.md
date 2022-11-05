@@ -24,6 +24,27 @@ yes
 
 4.  Uncomment the s3 backend provider code, cause now we created all infrastructure to be able to switch to new backend
 
+```
+terraform {
+  required_providers {
+    aws = {
+      source  = "hashicorp/aws"
+      version = "~> 4.0"
+    }
+  }
+
+  backend "s3" {
+    region         = "eu-central-1"
+    bucket         = "terraform-state-for-my-org"
+    dynamodb_table = "terraform-state-lock"
+    kms_key_id     = "alias/terraform-bucket-key"
+
+    key     = "org-shared-state/terraform.tfstate"
+    encrypt = true
+  }
+}
+```
+
 5.  Terraform init once again cause we're using new backend
 
 ```
@@ -42,6 +63,27 @@ terraform apply
 # How to destroy the infrastructure (s3 + dynamodb) without messing things up
 
 1. Comment out the backend configuration in `./main.tf`
+
+```
+terraform {
+  required_providers {
+    aws = {
+      source  = "hashicorp/aws"
+      version = "~> 4.0"
+    }
+  }
+
+  # backend "s3" {
+  #   region         = "eu-central-1"
+  #   bucket         = "terraform-state-for-my-org"
+  #   dynamodb_table = "terraform-state-lock"
+  #   kms_key_id     = "alias/terraform-bucket-key"
+
+  #   key     = "org-shared-state/terraform.tfstate"
+  #   encrypt = true
+  # }
+}
+```
 
 2. Move state from s3 backend to local backend
 
