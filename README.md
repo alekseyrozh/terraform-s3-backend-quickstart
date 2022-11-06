@@ -80,7 +80,13 @@ terraform apply
 
 # How to destroy the infrastructure (s3 + dynamodb) without messing things up
 
-1. Comment out the backend configuration in `./main.tf`
+1. Make sure you're making changes to the right AWS account. Execute this command to see who you are authenticated as
+
+```
+aws sts get-caller-identity
+```
+
+2. Comment out the backend configuration in `./main.tf`
 
 ```
 terraform {
@@ -103,7 +109,7 @@ terraform {
 }
 ```
 
-2. Move state from s3 backend to local backend
+3. Move state from s3 backend to local backend
 
 ```
 terraform init -migrate-state
@@ -112,11 +118,11 @@ terraform init -migrate-state
 yes
 ```
 
-3. Make the s3 bucket that stores state as destroyable
+4. Make the s3 bucket that stores state as destroyable
 
 In `./backend/main.tf` change `prevent_destroy = true` to `prevent_destroy = false` in s3 bucket resource
 
-4. Delete all content of all versions in the bucket.
+5. Delete all content of all versions in the bucket.
 
 You have 2 options:
 
@@ -135,7 +141,7 @@ aws s3api delete-objects --bucket <YOUR BUCKET NAME> \
   --query='{Objects: Versions[].{Key:Key,VersionId:VersionId}}')"
 ```
 
-5. Run terraform destroy
+6. Run terraform destroy
 
 ```
 terraform destroy
