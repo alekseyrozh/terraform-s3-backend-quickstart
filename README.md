@@ -8,26 +8,28 @@
 
 ## Steps:
 
-1. Make sure you're making changes to the right AWS account. Execute this command to see who you are authenticated as
+1. Clone this repository
+
+2. Make sure you're making changes to the right AWS account. Execute this command to see who you are authenticated as
 
 ```
 aws sts get-caller-identity
 ```
 
-2. Change aws region and bucket name to what you need.
+3. Change aws region and bucket name to what you need.
 
 - Open `./main.tf`
 - Change `aws-region` in `locals` to the region you want
 - Change `terraform_state_bucket_name` to the bucket name that makes sense for your project. **Bucket name must be unique across all of AWS**
 - Change `region` and `bucket` in `backend` configuration a few lines above to match the values you just set in `locals`. Keep backend configuration commented out for now
 
-3. Terraform init for the first time
+4. Terraform init for the first time
 
 ```
 terraform init
 ```
 
-4. Terraform apply to create s3 bucket, dynamodb table and a secret in KMS for encypting data in s3
+5. Terraform apply to create s3 bucket, dynamodb table and a secret in KMS for encypting data in s3
 
 ```
 terraform apply
@@ -36,7 +38,7 @@ terraform apply
 yes
 ```
 
-5.  Uncomment the s3 backend provider code in `./main.tf`, cause now we created all infrastructure to be able to switch to new backend
+6.  Uncomment the s3 backend provider code in `./main.tf`, cause now we created all infrastructure to be able to switch to new backend
 
 ```
 terraform {
@@ -59,7 +61,7 @@ terraform {
 }
 ```
 
-6.  Terraform init once again cause we're using new backend
+7.  Terraform init once again cause we're using new backend
 
 ```
 terraform init
@@ -68,13 +70,13 @@ terraform init
 yes
 ```
 
-7. Just as a test, do terraform apply and see 0 changes
+8. Just as a test, do terraform apply and see 0 changes
 
 ```
 terraform apply
 ```
 
-8. Now you can add your terraform code at the bottom of `main.tf`
+9. Now you can add your terraform code at the bottom of `main.tf`
 
 # How to destroy the infrastructure (s3 + dynamodb) without messing things up
 
